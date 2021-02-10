@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import java.io.InputStream;
 public class ListActivity extends AppCompatActivity {
     ImageView image;
     TextView save;
+    ScrollView scrollview;
     int REQUEST_IMAGE_CODE=1001;
 
     @Override
@@ -27,7 +29,7 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         save=(TextView) findViewById(R.id.save);
         image=(ImageView) findViewById(R.id.upload_image);
-
+        scrollview=(ScrollView) findViewById(R.id.scroll);
         save.setOnClickListener(view->{
             Toast.makeText(getApplicationContext(), "Save is Completed",Toast.LENGTH_LONG).show();
         });

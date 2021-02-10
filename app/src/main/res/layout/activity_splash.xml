@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    >
+
+    <TextView
+        android:background="@drawable/ic_baseline_favorite_24"
+        android:id="@+id/text_splash"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:fontFamily="@font/first_font"
+        android:gravity="center"
+        android:shadowColor="#E91E63"
+        android:shadowDx="1.0"
+        android:shadowDy="10.0"
+        android:shadowRadius="1.0"
+        android:text="Record \nMy Diet!"
+        android:textColor="#FFD9A1"
+        android:textSize="60sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

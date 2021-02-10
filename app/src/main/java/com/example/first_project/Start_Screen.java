@@ -20,7 +20,7 @@ public class Start_Screen extends AppCompatActivity {
         button = (TextView) findViewById(R.id.go_to_list);
         button.setOnClickListener(view->{
             Intent intent;
-            intent=new Intent(getApplicationContext(),ListActivity.class);
+            intent=new Intent(getApplicationContext(),Start_list.class);
             startActivity(intent);
         });
     }

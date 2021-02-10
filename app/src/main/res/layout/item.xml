@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/line"
+    android:orientation="horizontal">
+    <TextView
+        android:background="@drawable/line"
+        android:id="@+id/image_item_recycler"
+        android:text="new name"
+        android:fontFamily="@font/first_font"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/Date"
+            android:fontFamily="@font/first_font"
+            android:text="Date"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"  />
+
+        <TextView
+            android:id="@+id/Title"
+            android:text="Title"
+            android:fontFamily="@font/first_font"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"/>
+    </LinearLayout>
+</LinearLayout>
