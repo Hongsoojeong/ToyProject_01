@@ -2,44 +2,58 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@drawable/line"
+    android:layout_marginTop="20dp"
+    android:elevation="10dp"
+
     android:orientation="horizontal">
+
     <TextView
-        android:background="@drawable/line"
         android:id="@+id/image_item_recycler"
-        android:text="new name"
-        android:fontFamily="@font/first_font"
+        android:text="New"
+        android:fontFamily="@font/third_font"
         android:gravity="center"
-        android:textSize="14sp"
+        android:textSize="20sp"
         android:textColor="@color/black"
-        android:layout_width="56dp"
+        android:layout_width="55dp"
         android:layout_height="match_parent"
         />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
         <TextView
             android:id="@+id/Date"
-            android:fontFamily="@font/first_font"
-            android:text="Date"
-            android:textColor="@color/black"
-            android:textSize="14sp"
+            android:fontFamily="@font/third_font"
+            android:text="[Date]"
+            android:textColor="#000000"
+            android:textSize="20sp"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="28dp"  />
+            android:layout_height="50dp"  />
 
         <TextView
+            android:layout_marginTop="10dp"
             android:id="@+id/Title"
-            android:text="Title"
-            android:fontFamily="@font/first_font"
-            android:textSize="14sp"
-            android:textColor="@color/black"
+            android:text="[Title]"
+            android:fontFamily="@font/third_font"
+            android:textSize="20sp"
+            android:shadowRadius="1.0"
+            android:textColor="#000000"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="36dp"/>
+            android:layout_height="50dp"/>
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="8dp"
+            android:background="#000000"
+            ></View>
     </LinearLayout>
+
 </LinearLayout>

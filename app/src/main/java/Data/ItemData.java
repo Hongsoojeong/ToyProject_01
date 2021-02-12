@@ -1,5 +1,7 @@
 package Data;
 
+//데이터 리스트
+
 public class ItemData {
     private String Date;
     private String Title;

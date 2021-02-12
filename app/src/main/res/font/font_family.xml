@@ -5,4 +5,14 @@
         android:fontWeight="400"
         android:font="@font/first_font"
         />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/second_font"
+        />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/third_font"
+        />
 </font-family>

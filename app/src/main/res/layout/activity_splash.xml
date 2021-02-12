@@ -14,19 +14,23 @@
         android:id="@+id/text_splash"
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:fontFamily="@font/first_font"
+        android:fontFamily="@font/second_font"
         android:gravity="center"
-        android:shadowColor="#E91E63"
+        android:shadowColor="#595959"
         android:shadowDx="1.0"
         android:shadowDy="10.0"
         android:shadowRadius="1.0"
+
         android:text="Record \nMy Diet!"
-        android:textColor="#FFD9A1"
+        android:textColor="#FFFFFF"
         android:textSize="60sp"
         android:textStyle="italic"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

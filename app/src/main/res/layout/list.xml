@@ -9,16 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Recoded My Diet List"
+
+            android:fontFamily="@font/third_font"
             android:gravity="center"
-            android:fontFamily="@font/first_font"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#E91E63"
-            />
+            android:text="Recoded My Diet List"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
@@ -31,10 +33,14 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:background="@drawable/ic_baseline_favorite_24"
-            android:fontFamily="@font/first_font"
+            android:background="@drawable/ic_baseline_fitness_center_24"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/third_font"
             android:text="add"
-            app:backgroundTint="#E91E63"></Button>
+            android:textColor="@color/black"
+            android:textSize="25dp"
+
+            app:backgroundTint="#919191"></Button>
 
     </LinearLayout>
 </LinearLayout>
