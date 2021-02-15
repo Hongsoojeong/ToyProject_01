@@ -10,13 +10,22 @@
     >
 
     <TextView
-        android:background="@drawable/ic_baseline_favorite_24"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="320dp"
+        android:background="#000000"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+    </TextView>
+    <TextView
+
         android:id="@+id/text_splash"
         android:layout_width="350dp"
         android:layout_height="350dp"
         android:fontFamily="@font/second_font"
         android:gravity="center"
-        android:shadowColor="#595959"
+        android:shadowColor="#000000"
         android:shadowDx="1.0"
         android:shadowDy="10.0"
         android:shadowRadius="1.0"

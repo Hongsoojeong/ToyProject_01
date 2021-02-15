@@ -3,6 +3,7 @@ package com.example.first_project;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,9 +13,11 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,18 +27,27 @@ import java.util.Map;
 
 
 public class ListActivity extends AppCompatActivity {
+
+    int bf_key=0;
+    int lc_key=0;
+    int dn_key=0;
+
     ImageView image;
     TextView save;
 
     EditText editTitle;
     EditText editContent;
 
+    public Switch Breakfast;
+    public Switch Lunch;
+    public Switch Dinner;
 
     SharedPreferences sf; // 앱 내 데이터를 저장할 객체
     SharedPreferences.Editor editor; // 앱 내 데이터를 수정할 객체
 
     int REQUEST_IMAGE_CODE=1001;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -45,11 +57,18 @@ public class ListActivity extends AppCompatActivity {
         sf=getSharedPreferences("sFile", MODE_PRIVATE);
         editor= sf.edit();
 
+        Breakfast = (Switch) findViewById(R.id.Breakfast);
+        Lunch= (Switch) findViewById(R.id.Lunch);
+        Dinner = (Switch) findViewById(R.id.Dinner);
+
+
         editTitle = findViewById(R.id.dateAndTime);
         editContent = findViewById(R.id.content);
 
+
         String title= sf.getString("memoTitle","");
         String content = sf.getString("memoContent", "");
+
 
         editTitle.setText(title);
         editContent.setText(content);
@@ -59,26 +78,47 @@ public class ListActivity extends AppCompatActivity {
         image=(ImageView) findViewById(R.id.upload_image);
 
 
-        save.setOnClickListener(view->{
-            Toast.makeText(getApplicationContext(), "Save is Completed",Toast.LENGTH_LONG).show();
 
+
+
+    save.setOnClickListener(view->{
+
+        Toast.makeText(getApplicationContext(), "Save is Completed",Toast.LENGTH_SHORT).show();
             String titleTrim = editTitle.getText().toString().trim();
             String contentTrim = editContent.getText().toString().trim();
 
-            if (!titleTrim.equals("") && !contentTrim.equals("")) {
+        if (Breakfast.isChecked())
+        {
+
+            bf_key=1;
+        }
+
+        if (Lunch.isChecked())
+        {
+            lc_key=1;
+        }
+
+        if (Dinner.isChecked()){
+            dn_key=1;
+        }
+
+        if (!titleTrim.equals("") && !contentTrim.equals("")) {
                 memo(titleTrim, contentTrim);
             }
             else {
-                Toast.makeText(getApplicationContext(), "Please Enter All value", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Please Enter All value", Toast.LENGTH_SHORT).show();
             }
 
-
         });
+
 
         image.setOnClickListener(view->{
            openGallery();
         });
+
+
     }
+
 public void openGallery(){
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -86,7 +126,9 @@ public void openGallery(){
 
         startActivityForResult(intent, 101);
 }
+
 @Override
+
 protected void onActivityResult (int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -110,9 +152,7 @@ protected void onActivityResult (int requestCode, int resultCode, Intent data){
 }
 
     private void memo (String title, String content){
-
         editor.putString("memoTitle", title).commit();
         editor.putString("memoContent", content).commit();
-
     }
 }
