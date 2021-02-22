@@ -31,7 +31,6 @@ public class Start_list extends AppCompatActivity  {
 
 
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
 
@@ -54,7 +53,7 @@ public class Start_list extends AppCompatActivity  {
         button.setOnClickListener(view->{
             count+=1;
             Toast.makeText(this, "Create The New Diet Record!", Toast.LENGTH_SHORT).show();
-            adapter.addItem(new ItemData(String.valueOf(count),"Date", "Title"));
+            adapter.addItem(new ItemData(String.valueOf(count),"Date", "When"));
             adapter.notifyDataSetChanged();
         });
 
@@ -67,7 +66,7 @@ public class Start_list extends AppCompatActivity  {
 
 
     private void getData(){
-        adapter.addItem(new ItemData(String.valueOf(count),"Date","Title"));
+        adapter.addItem(new ItemData(String.valueOf(count),"Date","When"));
         adapter.notifyDataSetChanged();
     }
 }
