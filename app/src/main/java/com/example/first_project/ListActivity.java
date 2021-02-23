@@ -32,7 +32,6 @@ import java.text.BreakIterator;
 import java.util.Calendar;
 import java.util.Map;
 
-
 public class ListActivity extends AppCompatActivity {
 
     public static boolean check = false;
@@ -75,6 +74,8 @@ public class ListActivity extends AppCompatActivity {
         Back = findViewById(R.id.back);
         editContent = findViewById(R.id.content);
         ymBtn = findViewById(R.id.ymBtn);
+        save = (TextView) findViewById(R.id.save);
+        image = (ImageView) findViewById(R.id.upload_image);
 
 
 
@@ -94,24 +95,17 @@ public class ListActivity extends AppCompatActivity {
 
 
 
-
-
-
         String title = sf.getString("memoTitle", "");
         String content = sf.getString("memoContent", "");
 
-
         editContent.setText(content);
-
-        save = (TextView) findViewById(R.id.save);
-        image = (ImageView) findViewById(R.id.upload_image);
-
 
 
 
         save.setOnClickListener(view -> {
             Toast.makeText(getApplicationContext(), "Save is Completed", Toast.LENGTH_SHORT).show();
             String contentTrim = editContent.getText().toString().trim();
+            String titleTrim=ymBtn.getText().toString().trim();
             if (Breakfast.isChecked()) {
 
                 bf_key = 1;
@@ -125,20 +119,18 @@ public class ListActivity extends AppCompatActivity {
                 dn_key = 1;
             }
 
-            if (!contentTrim.equals("")) {
+            if (!titleTrim.equals("")&&!contentTrim.equals("")) {
+                memo(titleTrim, contentTrim);
+            }
+            else{
                 Toast.makeText(getApplicationContext(), "Please Enter All value", Toast.LENGTH_SHORT).show();
             }
 
         });
 
-
-
         image.setOnClickListener(view -> {
             openGallery();
         });
-
-
-
 
         Back.setOnClickListener(view -> {
             Intent intent;
