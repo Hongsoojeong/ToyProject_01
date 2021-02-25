@@ -27,6 +27,12 @@ public class Start_list extends AppCompatActivity  {
     int count=1;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 

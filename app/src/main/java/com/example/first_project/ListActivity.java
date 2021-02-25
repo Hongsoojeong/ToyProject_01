@@ -16,6 +16,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -31,6 +32,8 @@ import java.io.InputStream;
 import java.text.BreakIterator;
 import java.util.Calendar;
 import java.util.Map;
+
+import Data.ItemData;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -65,18 +68,25 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
 
+        ItemData data= new ItemData("","","");
+
+
+
+        
+
+
         sf = getSharedPreferences("sFile", MODE_PRIVATE);
         editor = sf.edit();
 
         Breakfast = (Switch) findViewById(R.id.Breakfast);
         Lunch = (Switch) findViewById(R.id.Lunch);
         Dinner = (Switch) findViewById(R.id.Dinner);
+
         Back = findViewById(R.id.back);
         editContent = findViewById(R.id.content);
         ymBtn = findViewById(R.id.ymBtn);
         save = (TextView) findViewById(R.id.save);
         image = (ImageView) findViewById(R.id.upload_image);
-
 
 
         if(picker.check){
@@ -96,9 +106,52 @@ public class ListActivity extends AppCompatActivity {
 
 
         String title = sf.getString("memoTitle", "");
+        Log.d("LOGTAG/onCreate",title);
         String content = sf.getString("memoContent", "");
+        Log.d("LOGTAG/onCreate",content);
 
+        boolean bfSwitch = sf.getBoolean("isBreakfastOn",false);
+        boolean lcSwitch = sf.getBoolean("isLunchOn",false);
+        boolean dnSwitch = sf.getBoolean("isDinnerOn",false);
+
+
+
+        ymBtn.setText(title);
         editContent.setText(content);
+
+
+        Breakfast.setChecked(bfSwitch);
+        Lunch.setChecked(lcSwitch);
+        Dinner.setChecked(dnSwitch);
+
+
+
+
+
+        Breakfast.setOnCheckedChangeListener((view,b)->{
+                    if (b){
+                        Lunch.setChecked(false);
+                        Dinner.setChecked(false);
+                    }
+                }
+        );
+
+
+        Lunch.setOnCheckedChangeListener((view,b)->{
+                    if (b){
+                        Breakfast.setChecked(false);
+                        Dinner.setChecked(false);
+                    }
+                }
+        );
+
+        Dinner.setOnCheckedChangeListener((view,b)->{
+                    if (b){
+                        Breakfast.setChecked(false);
+                        Lunch.setChecked(false);
+                    }
+                }
+        );
 
 
 
@@ -106,18 +159,9 @@ public class ListActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Save is Completed", Toast.LENGTH_SHORT).show();
             String contentTrim = editContent.getText().toString().trim();
             String titleTrim=ymBtn.getText().toString().trim();
-            if (Breakfast.isChecked()) {
 
-                bf_key = 1;
-            }
 
-            if (Lunch.isChecked()) {
-                lc_key = 1;
-            }
 
-            if (Dinner.isChecked()) {
-                dn_key = 1;
-            }
 
             if (!titleTrim.equals("")&&!contentTrim.equals("")) {
                 memo(titleTrim, contentTrim);
@@ -128,14 +172,17 @@ public class ListActivity extends AppCompatActivity {
 
         });
 
+
+
+
+
+
         image.setOnClickListener(view -> {
             openGallery();
         });
 
         Back.setOnClickListener(view -> {
-            Intent intent;
-            intent = new Intent(getApplicationContext(), Start_list.class);
-            startActivity(intent);
+            finish();
         });
 
 
@@ -177,7 +224,14 @@ public class ListActivity extends AppCompatActivity {
 
     private void memo(String title, String content) {
         editor.putString("memoTitle", title).commit();
+        Log.d("LOGTAG/LISTACTIVITY",sf.getString("memoTitle",""));
         editor.putString("memoContent", content).commit();
+        Log.d("LOGTAG/LISTACTIVITY",sf.getString("memoContent",""));
+
+        editor.putBoolean("isBreakfastOn",Breakfast.isChecked()).commit();
+        editor.putBoolean("isLunchOn",Lunch.isChecked()).commit();
+        editor.putBoolean("isDinnerOn",Dinner.isChecked()).commit();
+
     }
 
     public void onClick(View v){
