@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +43,7 @@ public class ListActivity extends AppCompatActivity {
     int bf_key = 0;
     int lc_key = 0;
     int dn_key = 0;
-
+    String yy,mm,dd;
     TextView ymBtn;
     String year, month, day;
 
@@ -54,7 +56,7 @@ public class ListActivity extends AppCompatActivity {
     Switch Lunch;
     Switch Dinner;
 
-    SharedPreferences sf; // 앱 내 데이터를 저장할 객체
+    SharedPreferences sf_2; // 앱 내 데이터를 저장할 객체
     SharedPreferences.Editor editor; // 앱 내 데이터를 수정할 객체
 
     int REQUEST_IMAGE_CODE = 1001;
@@ -67,16 +69,11 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-
         ItemData data= new ItemData("","","");
 
+        sf_2 = getSharedPreferences("sFile",MODE_PRIVATE);
+        editor = sf_2.edit();
 
-
-        
-
-
-        sf = getSharedPreferences("sFile", MODE_PRIVATE);
-        editor = sf.edit();
 
         Breakfast = (Switch) findViewById(R.id.Breakfast);
         Lunch = (Switch) findViewById(R.id.Lunch);
@@ -85,39 +82,14 @@ public class ListActivity extends AppCompatActivity {
         Back = findViewById(R.id.back);
         editContent = findViewById(R.id.content);
         ymBtn = findViewById(R.id.ymBtn);
+
         save = (TextView) findViewById(R.id.save);
         image = (ImageView) findViewById(R.id.upload_image);
 
 
-        if(picker.check){
-            Intent pickerData = getIntent(); /*데이터 수신*/
-            if (getIntent() != null) {
-                if (getIntent().getExtras() != null) {
-                    year = pickerData.getExtras().getString("yy");
-                    month = pickerData.getExtras().getString("mm");
-                    day = pickerData.getExtras().getString("dd");
-                    ymBtn.setText(year + "년 " + month + "월 " + day + "일");
-                } else {
-                    Toast.makeText(getApplicationContext(), "날짜를 다시한번 선택해주세요", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-
-
-
-        String title = sf.getString("memoTitle", "");
-        Log.d("LOGTAG/onCreate",title);
-        String content = sf.getString("memoContent", "");
-        Log.d("LOGTAG/onCreate",content);
-
-        boolean bfSwitch = sf.getBoolean("isBreakfastOn",false);
-        boolean lcSwitch = sf.getBoolean("isLunchOn",false);
-        boolean dnSwitch = sf.getBoolean("isDinnerOn",false);
-
-
-
-        ymBtn.setText(title);
-        editContent.setText(content);
+        boolean bfSwitch = sf_2.getBoolean("isBreakfastOn",false);
+        boolean lcSwitch = sf_2.getBoolean("isLunchOn",false);
+        boolean dnSwitch = sf_2.getBoolean("isDinnerOn",false);
 
 
         Breakfast.setChecked(bfSwitch);
@@ -125,9 +97,22 @@ public class ListActivity extends AppCompatActivity {
         Dinner.setChecked(dnSwitch);
 
 
+        String title = sf_2.getString("memoTitle", "");
+        Log.d("LOGTAG/onCreate",title);
+
+        String content = sf_2.getString("memoContent", "");
+        Log.d("LOGTAG/onCreate",content);
+
+        editContent.setText(content);
+        ymBtn.setText(title);
 
 
 
+
+
+
+//스위치 중복 상태를 방지하기 위해서 if문을 설정. setChecked를 이용해서 만약 얘가 setChecked 상태다.. 하면
+        //다른 setChecked가 된 스위치들은 꺼놓도록 하는 것이다.
         Breakfast.setOnCheckedChangeListener((view,b)->{
                     if (b){
                         Lunch.setChecked(false);
@@ -135,8 +120,6 @@ public class ListActivity extends AppCompatActivity {
                     }
                 }
         );
-
-
         Lunch.setOnCheckedChangeListener((view,b)->{
                     if (b){
                         Breakfast.setChecked(false);
@@ -155,12 +138,13 @@ public class ListActivity extends AppCompatActivity {
 
 
 
+
         save.setOnClickListener(view -> {
             Toast.makeText(getApplicationContext(), "Save is Completed", Toast.LENGTH_SHORT).show();
             String contentTrim = editContent.getText().toString().trim();
             String titleTrim=ymBtn.getText().toString().trim();
 
-
+            Log.d("save.setonClickListener",ymBtn.getText().toString().trim());
 
 
             if (!titleTrim.equals("")&&!contentTrim.equals("")) {
@@ -169,11 +153,7 @@ public class ListActivity extends AppCompatActivity {
             else{
                 Toast.makeText(getApplicationContext(), "Please Enter All value", Toast.LENGTH_SHORT).show();
             }
-
-        });
-
-
-
+    });
 
 
 
@@ -198,16 +178,16 @@ public class ListActivity extends AppCompatActivity {
     }
 
 
+
+
     @Override
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
                 Uri fileUri = data.getData();
                 ContentResolver resolver = getContentResolver();
-
                 try {
                     InputStream instream = resolver.openInputStream(fileUri);
                     Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
@@ -217,22 +197,27 @@ public class ListActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
         }
     }
 
 
     private void memo(String title, String content) {
+        //날짜 저장
         editor.putString("memoTitle", title).commit();
-        Log.d("LOGTAG/LISTACTIVITY",sf.getString("memoTitle",""));
+        Log.d("LOGTAG/LISTACTIVITY",sf_2.getString("memoTitle",""));
+        // 내용 저장
         editor.putString("memoContent", content).commit();
-        Log.d("LOGTAG/LISTACTIVITY",sf.getString("memoContent",""));
+        Log.d("LOGTAG/LISTACTIVITY",sf_2.getString("memoContent",""));
 
+        //스위치의 상태 저장
         editor.putBoolean("isBreakfastOn",Breakfast.isChecked()).commit();
         editor.putBoolean("isLunchOn",Lunch.isChecked()).commit();
         editor.putBoolean("isDinnerOn",Dinner.isChecked()).commit();
 
     }
+
+
+
 
     public void onClick(View v){
         switch(v.getId()){
@@ -245,5 +230,7 @@ public class ListActivity extends AppCompatActivity {
         }
     }
 
-    }
+
+}
+
 
