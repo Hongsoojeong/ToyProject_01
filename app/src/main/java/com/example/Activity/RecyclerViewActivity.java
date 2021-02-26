@@ -1,26 +1,19 @@
-package com.example.first_project;
+package com.example.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
-
-import Adapter.ItemAdapter;
-import Data.ItemData;
+import com.example.Adapter.ItemAdapter;
+import com.example.Data.ItemData;
 
 //리사이클러 뷰 코드
 
-public class Start_list extends AppCompatActivity  {
+public class ItemListActivity extends AppCompatActivity  {
     private ItemAdapter adapter;
     RecyclerView recyclerView;
     Button button;

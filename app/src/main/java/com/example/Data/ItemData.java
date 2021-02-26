@@ -1,4 +1,4 @@
-package Data;
+package com.example.first_project.Data;
 
 //데이터 리스트
 

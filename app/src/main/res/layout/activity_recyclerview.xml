@@ -22,14 +22,14 @@
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             />
 
         <Button
-            android:id="@+id/add"
+            android:id="@+id/add_itemView"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"

@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.first_project.R;
 
 
-public class picker extends AppCompatActivity {
+public class PickerActivity extends AppCompatActivity {
 
     SharedPreferences sf;
     SharedPreferences.Editor editor;
@@ -24,6 +24,8 @@ public class picker extends AppCompatActivity {
     public static String yy,mm,dd;
     public static boolean check=false;
     @Override
+
+
     protected void onCreate(Bundle savedInstanceState) {
 
         sf = getSharedPreferences("sFile",MODE_PRIVATE);
@@ -45,13 +47,14 @@ public class picker extends AppCompatActivity {
         pickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("pickerBtn/yy mm dd", yy+"년도"+mm+"월"+dd+"일");
-                editor.putString("memoTitle",yy+"년도"+mm+"월"+dd+"일");
-                editor.commit();
-                Log.d("pickerBtn/editor",sf.getString("memoTitle",""));
-                Intent intent = new Intent(getApplication(), ListActivity.class);
-                startActivityForResult(intent,1);
+
+                Intent intent = new Intent();
+                intent.putExtra("memoTitle",yy+"년도"+mm+"월"+dd+"일");
+                setResult(RESULT_OK, intent);
                 finish();
+
+
+
             }
         });
 

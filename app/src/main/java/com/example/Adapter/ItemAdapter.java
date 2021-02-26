@@ -1,20 +1,17 @@
-package Adapter; //오타났음 ㅠ
+package com.example.first_project.Adapter; //오타났음 ㅠ
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.first_project.ListActivity;
 import com.example.first_project.R;
-import com.example.first_project.Start_list;
 
 import java.util.ArrayList;
-import Data.ItemData;
+import com.example.first_project.Data.ItemData;
 
 
 //어댑터 코드

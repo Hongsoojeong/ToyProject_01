@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class splashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     //전체화면 만들기
     @Override
@@ -25,7 +25,7 @@ public class splashActivity extends AppCompatActivity {
         hd.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent (splashActivity.this, Start_Screen.class);
+                Intent mainIntent = new Intent (SplashActivity.this, StartActivity.class);
                 startActivity(mainIntent);
                 finish();
             }

@@ -14,22 +14,21 @@
         android:layout_marginTop="150dp"
         />
     <DatePicker
+        android:id="@+id/datePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:datePickerMode="spinner"
         android:layout_marginTop="50dp"
         android:calendarViewShown="false"
-        android:id="@+id/datepicker"
-
         ></DatePicker>
 
     <Button
+        android:id="@+id/pickerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="선택"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:id="@+id/pickerBtn"
         android:fontFamily="@font/third_font"
         android:background="@drawable/start_button"
         ></Button>

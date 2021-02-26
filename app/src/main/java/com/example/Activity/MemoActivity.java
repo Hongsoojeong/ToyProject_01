@@ -1,51 +1,32 @@
-package com.example.first_project;
+package com.example.Activity;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.io.InputStream;
-import java.text.BreakIterator;
-import java.util.Calendar;
-import java.util.Map;
 
-import Data.ItemData;
+import com.example.Data.ItemData;
 
 public class ListActivity extends AppCompatActivity {
 
     public static boolean check = false;
-    int bf_key = 0;
-    int lc_key = 0;
-    int dn_key = 0;
-    String yy,mm,dd;
+
     TextView ymBtn;
-    String year, month, day;
 
     ImageView image;
     TextView save;
@@ -56,7 +37,7 @@ public class ListActivity extends AppCompatActivity {
     Switch Lunch;
     Switch Dinner;
 
-    SharedPreferences sf_2; // 앱 내 데이터를 저장할 객체
+    SharedPreferences sp; // 앱 내 데이터를 저장할 객체
     SharedPreferences.Editor editor; // 앱 내 데이터를 수정할 객체
 
     int REQUEST_IMAGE_CODE = 1001;
@@ -71,25 +52,30 @@ public class ListActivity extends AppCompatActivity {
 
         ItemData data= new ItemData("","","");
 
-        sf_2 = getSharedPreferences("sFile",MODE_PRIVATE);
-        editor = sf_2.edit();
+        sp = getSharedPreferences("sFile",MODE_PRIVATE);
+        editor = sp.edit();
+
 
 
         Breakfast = (Switch) findViewById(R.id.Breakfast);
         Lunch = (Switch) findViewById(R.id.Lunch);
         Dinner = (Switch) findViewById(R.id.Dinner);
 
+
+
         Back = findViewById(R.id.back);
         editContent = findViewById(R.id.content);
         ymBtn = findViewById(R.id.ymBtn);
+
 
         save = (TextView) findViewById(R.id.save);
         image = (ImageView) findViewById(R.id.upload_image);
 
 
-        boolean bfSwitch = sf_2.getBoolean("isBreakfastOn",false);
-        boolean lcSwitch = sf_2.getBoolean("isLunchOn",false);
-        boolean dnSwitch = sf_2.getBoolean("isDinnerOn",false);
+
+        boolean bfSwitch = sp.getBoolean("isBreakfastOn",false);
+        boolean lcSwitch = sp.getBoolean("isLunchOn",false);
+        boolean dnSwitch = sp.getBoolean("isDinnerOn",false);
 
 
         Breakfast.setChecked(bfSwitch);
@@ -97,10 +83,10 @@ public class ListActivity extends AppCompatActivity {
         Dinner.setChecked(dnSwitch);
 
 
-        String title = sf_2.getString("memoTitle", "");
+        String title = sp.getString("memoTitle", "");
         Log.d("LOGTAG/onCreate",title);
 
-        String content = sf_2.getString("memoContent", "");
+        String content = sp.getString("memoContent", "");
         Log.d("LOGTAG/onCreate",content);
 
         editContent.setText(content);
@@ -184,6 +170,7 @@ public class ListActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
                 Uri fileUri = data.getData();
@@ -198,16 +185,22 @@ public class ListActivity extends AppCompatActivity {
                 }
             }
         }
+        else if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                ymBtn.setText(data.getStringExtra("memoTitle"));
+            }
+        }
+
     }
 
 
     private void memo(String title, String content) {
         //날짜 저장
         editor.putString("memoTitle", title).commit();
-        Log.d("LOGTAG/LISTACTIVITY",sf_2.getString("memoTitle",""));
+        Log.d("LOGTAG/LISTACTIVITY",sp.getString("memoTitle",""));
         // 내용 저장
         editor.putString("memoContent", content).commit();
-        Log.d("LOGTAG/LISTACTIVITY",sf_2.getString("memoContent",""));
+        Log.d("LOGTAG/LISTACTIVITY",sp.getString("memoContent",""));
 
         //스위치의 상태 저장
         editor.putBoolean("isBreakfastOn",Breakfast.isChecked()).commit();
@@ -222,9 +215,12 @@ public class ListActivity extends AppCompatActivity {
     public void onClick(View v){
         switch(v.getId()){
             case R.id.ymBtn:
-                Intent picker = new Intent(getApplicationContext(),picker.class);
-                startActivity(picker);
+
+                Intent picker = new Intent(this, PickerActivity.class);
+                startActivityForResult(picker, 1);
                 break;
+
+
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
