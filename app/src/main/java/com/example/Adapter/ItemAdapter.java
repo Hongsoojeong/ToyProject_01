@@ -16,10 +16,6 @@ import com.example.Data.ItemData;
 import java.util.ArrayList;
 
 
-//어댑터 코드
-
-
-//어댑터 코드에서 리사이클러 어댑터를 상속받아야 함
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
     // adapter에 들어갈 list.
@@ -45,35 +41,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         this.mListener = listener;
         this.mLongListener = longListener;
     }
-//오버라이드 되야하는 함수는 총 3가지.
-// 1. 뷰홀더를 만드는 함수 2. 갯수를 세는 함수 3. 뷰 홀더에 뷰의 데이터를 바인딩하는 함수
-
-
 
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        // layoutInflater 를 이용하여 전 단계에서 만들었던 item.xml 를 inflate 시킴.
-        // return 인자는 ViewHolder.
-        
         this.parent = parent;
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_item, parent, false);
 
-        //View 타입의 객체를 만든 후, layoutInflater 를 통해서 해당 레이아웃의 데이터를 인플레이트
-        // date, title 이 있고, add 버튼이 있었던 그 레이아웃
-
         return new ItemViewHolder(view);
-
-        // 그리고 그 해당되는 view 를 리턴해주는 거지
-        // 밑에 ItemViewHolder 를 정의해줬음
-
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
-        holder.onBind(position, listData.get(position), parent); //onBind 라는 함수를 통해서 데이터를 바인딩하는거
+        holder.onBind(position, listData.get(position), parent);
     }
 
 
@@ -91,10 +72,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public void resetItem(){
         listData.clear();
     }
+
+
+
     // RecyclerView 의 핵심인 ViewHolder.
     // 여기서 subView 를 setting.
-
-
     public class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private TextView number;
@@ -123,14 +105,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
 
         void onBind(int position, ItemData data, @NonNull ViewGroup parent) {
-
             number.setText(data.getNumber());
             date.setText(data.getDate());
-            title.setText(data.getTitle());
+            title.setText(data.getWhen());
             //imageView.setImageResource(data.getImage());
-
         }
-
 
     }
 

@@ -2,14 +2,11 @@ package com.example.Data;
 
 //데이터 리스트
 
-import com.google.gson.Gson;
-
 public class ItemData {
 
-    private String date="";
-    private String title="";
     private String number="";
-    private String content = "";
+    private String date="";
+    private String when="";
 
     public ItemData() {
     }
@@ -21,11 +18,11 @@ public class ItemData {
         this.number = number;
     }
 
-    public String getTitle() {
-        return title;
+    public String getWhen() {
+        return when;
     }
-    public void setTitle(String image) {
-        this.title = title;
+    public void setWhen(String when) {
+        this.when = when;
     }
 
     public String getDate() {
@@ -35,18 +32,11 @@ public class ItemData {
         this.date = date;
     }
 
-    public String getContent() {
-        return content;
-    }
-    public void setContent(String content) {
-        this.content = content;
-    }
 
-    public ItemData(String name, String date, String title, String content) {
-        this.number = name;
+    public ItemData(String number, String date, String when) {
+        this.number=number;
         this.date = date;
-        this.title = title;
-        this.content= content;
+        this.when = when;
     }
 
 }

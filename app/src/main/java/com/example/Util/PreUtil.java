@@ -2,6 +2,7 @@ package com.example.Util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.Data.ItemData;
 import com.google.gson.Gson;
@@ -31,18 +32,21 @@ public class PreUtil {
         Gson gson = new Gson();
         String json = gson.toJson(diaries);
 
-        editor.putString(DIARY_DATA, json);
+        editor.putString("memoTitle", json);
         editor.commit();
     }
 
     public ArrayList<ItemData> getDiaryPref(){
         ArrayList<ItemData> arrayItems = new ArrayList<>();
-        String serializedObject = preferences.getString(DIARY_DATA, null);
+        String serializedObject = preferences.getString("memoTitle", null);
+        Log.d("PreUtil ArrayList",serializedObject );
+        //여기서 serializedObject는 null 값이 아님을 알수있음
         if (serializedObject != null) {
             Gson gson = new Gson();
             Type type = new TypeToken<List<ItemData>>(){}.getType();
             arrayItems = gson.fromJson(serializedObject, type);
         }
+
         return arrayItems;
     }
 

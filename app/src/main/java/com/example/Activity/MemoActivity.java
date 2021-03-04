@@ -18,20 +18,21 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.Util.PreUtil;
+
 import java.io.InputStream;
 
-public class MemoActivity<PrefUtil> extends AppCompatActivity {
+public class MemoActivity extends AppCompatActivity {
 
     public static boolean check = false;
 
     TextView selectDate;
     // 날씨 입력하는 textView 를 클릭하면 datePicker 액티비티로 넘어가므로
-    PrefUtil prefUtil;
     ImageView image;
     TextView saveBtn;
     TextView backBtn;
     EditText content;
-
+    PreUtil preUtil;
     Switch breakfast_switch;
     Switch lunch_switch;
     Switch dinner_switch;
@@ -46,9 +47,11 @@ public class MemoActivity<PrefUtil> extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
 
+        preUtil = new PreUtil(this);
 
         sharedPreferences = getSharedPreferences("sFile",MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -90,8 +93,6 @@ public class MemoActivity<PrefUtil> extends AppCompatActivity {
         selectDate.setText(title);
 
 
-
-
 //스위치 중복 상태를 방지하기 위해서 if문을 설정. setChecked를 이용해서 만약 얘가 setChecked 상태다.. 하면
         //다른 setChecked가 된 스위치들은 꺼놓도록 하는 것이다.
         breakfast_switch.setOnCheckedChangeListener((view,b)->{
@@ -124,10 +125,7 @@ public class MemoActivity<PrefUtil> extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Save is Completed", Toast.LENGTH_SHORT).show();
             String contentTrim = this.content.getText().toString().trim();
             String titleTrim= selectDate.getText().toString().trim();
-
             Log.d("save.setonClickListener", selectDate.getText().toString().trim());
-
-
             if (!titleTrim.equals("")&&!contentTrim.equals("")) {
                 memo(titleTrim, contentTrim);
             }
@@ -199,15 +197,27 @@ public class MemoActivity<PrefUtil> extends AppCompatActivity {
         editor.putBoolean("isBreakfastOn",breakfast_switch.isChecked()).commit();
         editor.putBoolean("isLunchOn",lunch_switch.isChecked()).commit();
         editor.putBoolean("isDinnerOn", dinner_switch.isChecked()).commit();
+
+        if (breakfast_switch.isChecked()==true)
+        {
+            editor.putString("BreakfastChecked","breakfast").commit();
+            editor.putString("LunchChecked","").commit();
+            editor.putString("DinnerChecked","").commit();
+        }
+        else if (lunch_switch.isChecked()==true)
+        {
+            editor.putString("LunchChecked","lunch").commit();
+            editor.putString("BreakfastChecked","").commit();
+            editor.putString("DinnerChecked","").commit();
+        }
+        else if (dinner_switch.isChecked()==true){
+            editor.putString("DinnerChecked","dinner").commit();
+            editor.putString("BreakfastChecked","").commit();
+            editor.putString("LunchChecked","").commit();
+
+        }
+
     }
-
-
-    private void getData(){
-        Intent diaryIntent = getIntent();
-        selectDate.setText(diaryIntent.getStringExtra("title"));
-        content.setText(diaryIntent.getStringExtra("content"));
-    }
-
 
 
 
