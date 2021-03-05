@@ -7,8 +7,16 @@ public class ItemData {
     private String number="";
     private String date="";
     private String when="";
+    private String image="";
 
     public ItemData() {
+    }
+
+    public ItemData(String number, String date, String when, String image) {
+        this.number=number;
+        this.date = date;
+        this.when = when;
+        this.image=image;
     }
 
     public String getNumber() {
@@ -18,13 +26,6 @@ public class ItemData {
         this.number = number;
     }
 
-    public String getWhen() {
-        return when;
-    }
-    public void setWhen(String when) {
-        this.when = when;
-    }
-
     public String getDate() {
         return date;
     }
@@ -32,11 +33,19 @@ public class ItemData {
         this.date = date;
     }
 
-
-    public ItemData(String number, String date, String when) {
-        this.number=number;
-        this.date = date;
+    public String getWhen() {
+        return when;
+    }
+    public void setWhen(String when) {
         this.when = when;
     }
+
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 
 }

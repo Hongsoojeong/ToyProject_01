@@ -2,7 +2,6 @@ package com.example.Activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -61,9 +60,9 @@ public class RecyclerViewActivity extends AppCompatActivity  {
 
 
         addBtn.setOnClickListener(view->{
-            count+=1;
             Toast.makeText(this, "Create The New Diet Record!", Toast.LENGTH_SHORT).show();
-            adapter.addItem(new ItemData(String.valueOf(count),"Date","When"));
+            adapter.addItem(new ItemData(String.valueOf(count),"Date","When","1"));
+            count+=1;
             adapter.notifyDataSetChanged();
         });
 
@@ -75,27 +74,14 @@ public class RecyclerViewActivity extends AppCompatActivity  {
         getData();
     }
 
+
+
+
+
     private void getData(){
         adapter.resetItem();
-        String title = sharedPreferences.getString("memoTitle", "e");
-        String breakfast = sharedPreferences.getString("BreakfastChecked", "e");
-        String lunch = sharedPreferences.getString("LunchChecked", "e");
-        String dinner = sharedPreferences.getString("DinnerChecked", "e");
-        String save = sharedPreferences.getString("save", "e");
-        Log.d("breakfast/",breakfast);
-        Log.d("lunch/",lunch);
-        Log.d("dinner/",dinner);
-        for(int i = 0; i < 10; i++) {
-            if (breakfast=="breakfast"){
-                adapter.addItem(new ItemData(String.valueOf(i),title,"breakfast"));
-            }
-            else if (lunch=="lunch"){
-                adapter.addItem(new ItemData(String.valueOf(i),title,"lunch"));
-            }
-            else if (dinner=="dinner"){
-                adapter.addItem(new ItemData(String.valueOf(i),title,"dinner"));
-            }
-        }
+        diaries = prefUtil.getDiaryPref();
+        for(int i = 0; i < diaries.size(); i++) adapter.addItem(diaries.get(i));
         adapter.notifyDataSetChanged();
     }
 
@@ -105,5 +91,3 @@ public class RecyclerViewActivity extends AppCompatActivity  {
         getData();
     }
 }
-
-

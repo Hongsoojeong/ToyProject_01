@@ -25,7 +25,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     private ArrayList<ItemData> listData = new ArrayList<>();
     private ViewGroup parent;
-    
+
     public interface OnListItemLongSelectedInterface {
         void onItemLongSelected(View v, int position);
     }
@@ -102,16 +102,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 }
             });
 
-            }
+        }
 
 
         void onBind(int position, ItemData data, @NonNull ViewGroup parent) {
-
             number.setText(data.getNumber());
             date.setText(data.getDate());
             title.setText(data.getWhen());
             if (data.getDate()!="" || data.getWhen()!="")
-            aSwitch.setChecked(true);
+                aSwitch.setChecked(true);
             else
                 aSwitch.setChecked(false);
             //imageView.setImageResource(data.getImage());

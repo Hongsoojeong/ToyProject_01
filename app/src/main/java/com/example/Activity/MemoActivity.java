@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.Data.ItemData;
 import com.example.Util.PreUtil;
 
 import java.io.InputStream;
@@ -128,11 +129,13 @@ public class MemoActivity extends AppCompatActivity {
             Log.d("save.setonClickListener", selectDate.getText().toString().trim());
             if (!titleTrim.equals("")&&!contentTrim.equals("")) {
                 memo(titleTrim, contentTrim);
+                finish();
             }
             else{
                 Toast.makeText(getApplicationContext(), "Please Enter All value", Toast.LENGTH_SHORT).show();
             }
-    });
+
+        });
 
 
         image.setOnClickListener(view -> {
@@ -193,6 +196,8 @@ public class MemoActivity extends AppCompatActivity {
         editor.putString("memoContent", content).commit();
         Log.d("LOGTAG/LISTACTIVITY", sharedPreferences.getString("memoContent",""));
 
+
+
         //스위치의 상태 저장
         editor.putBoolean("isBreakfastOn",breakfast_switch.isChecked()).commit();
         editor.putBoolean("isLunchOn",lunch_switch.isChecked()).commit();
@@ -200,21 +205,14 @@ public class MemoActivity extends AppCompatActivity {
 
         if (breakfast_switch.isChecked()==true)
         {
-            editor.putString("BreakfastChecked","breakfast").commit();
-            editor.putString("LunchChecked","").commit();
-            editor.putString("DinnerChecked","").commit();
+            preUtil.setDiaryPref(new ItemData("1",title, "breakfast","1"));
         }
         else if (lunch_switch.isChecked()==true)
         {
-            editor.putString("LunchChecked","lunch").commit();
-            editor.putString("BreakfastChecked","").commit();
-            editor.putString("DinnerChecked","").commit();
+            preUtil.setDiaryPref(new ItemData("1",title, "lunch","1"));
         }
         else if (dinner_switch.isChecked()==true){
-            editor.putString("DinnerChecked","dinner").commit();
-            editor.putString("BreakfastChecked","").commit();
-            editor.putString("LunchChecked","").commit();
-
+            preUtil.setDiaryPref(new ItemData("1",title, "dinner","1"));
         }
 
     }
@@ -233,5 +231,3 @@ public class MemoActivity extends AppCompatActivity {
     }
 
 }
-
-
