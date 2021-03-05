@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -79,15 +80,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     // 여기서 subView 를 setting.
     public class ItemViewHolder extends RecyclerView.ViewHolder {
 
+        private Switch aSwitch;
         private TextView number;
         private TextView date;
         private TextView title;
 
-
         ItemViewHolder(View itemView) {
             super(itemView);
             //앞에서 item 레아이웃 view 를 받았으니까 해당하는 id 값을 가져와서 할 수 있음.
-
+            aSwitch= itemView.findViewById(R.id.record_checkSwitch);
             number =itemView.findViewById(R.id.count_item);
             date =itemView.findViewById(R.id.date_item);
             title =itemView.findViewById(R.id.title_item);
@@ -105,9 +106,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
 
         void onBind(int position, ItemData data, @NonNull ViewGroup parent) {
+
             number.setText(data.getNumber());
             date.setText(data.getDate());
             title.setText(data.getWhen());
+            if (data.getDate()!="" || data.getWhen()!="")
+            aSwitch.setChecked(true);
+            else
+                aSwitch.setChecked(false);
             //imageView.setImageResource(data.getImage());
         }
 
