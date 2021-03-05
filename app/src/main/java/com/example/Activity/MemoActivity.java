@@ -83,19 +83,15 @@ public class MemoActivity extends AppCompatActivity {
         lunch_switch.setChecked(lcSwitch);
         dinner_switch.setChecked(dnSwitch);
 
-
         String title = sharedPreferences.getString("memoTitle", "");
-        Log.d("LOGTAG/onCreate",title);
 
         String content = sharedPreferences.getString("memoContent", "");
-        Log.d("LOGTAG/onCreate",content);
+
 
         this.content.setText(content);
         selectDate.setText(title);
 
 
-//스위치 중복 상태를 방지하기 위해서 if문을 설정. setChecked를 이용해서 만약 얘가 setChecked 상태다.. 하면
-        //다른 setChecked가 된 스위치들은 꺼놓도록 하는 것이다.
         breakfast_switch.setOnCheckedChangeListener((view,b)->{
                     if (b){
                         lunch_switch.setChecked(false);
@@ -126,6 +122,7 @@ public class MemoActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Save is Completed", Toast.LENGTH_SHORT).show();
             String contentTrim = this.content.getText().toString().trim();
             String titleTrim= selectDate.getText().toString().trim();
+
             Log.d("save.setonClickListener", selectDate.getText().toString().trim());
             if (!titleTrim.equals("")&&!contentTrim.equals("")) {
                 memo(titleTrim, contentTrim);
@@ -197,7 +194,6 @@ public class MemoActivity extends AppCompatActivity {
         Log.d("LOGTAG/LISTACTIVITY", sharedPreferences.getString("memoContent",""));
 
 
-
         //스위치의 상태 저장
         editor.putBoolean("isBreakfastOn",breakfast_switch.isChecked()).commit();
         editor.putBoolean("isLunchOn",lunch_switch.isChecked()).commit();
@@ -205,14 +201,14 @@ public class MemoActivity extends AppCompatActivity {
 
         if (breakfast_switch.isChecked()==true)
         {
-            preUtil.setDiaryPref(new ItemData("1",title, "breakfast","1"));
+            preUtil.setDiaryPref(new ItemData("Record",title, "breakfast","1"));
         }
         else if (lunch_switch.isChecked()==true)
         {
-            preUtil.setDiaryPref(new ItemData("1",title, "lunch","1"));
+            preUtil.setDiaryPref(new ItemData("Record",title, "lunch","1"));
         }
         else if (dinner_switch.isChecked()==true){
-            preUtil.setDiaryPref(new ItemData("1",title, "dinner","1"));
+            preUtil.setDiaryPref(new ItemData("Record",title, "dinner","1"));
         }
 
     }

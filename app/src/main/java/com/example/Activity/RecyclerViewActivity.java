@@ -65,7 +65,6 @@ public class RecyclerViewActivity extends AppCompatActivity  {
             count+=1;
             adapter.notifyDataSetChanged();
         });
-
     }
 
     public void onItemLongSelected(View v, int position) {

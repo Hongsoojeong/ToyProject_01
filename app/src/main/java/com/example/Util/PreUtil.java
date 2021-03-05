@@ -46,6 +46,25 @@ public class PreUtil {
         return arrayItems;
     }
 
+    public void setTempPref(ItemData diary) {
+        Gson gson = new Gson();
+        String json = gson.toJson(diary);
+        editor.putString("temp", json);
+        editor.commit();
+    }
+
+    public ItemData getTempPref() {
+        ItemData diary = new ItemData();
+        String serializedObject = preferences.getString("temp", null);
+        if (serializedObject != null) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<ItemData>(){}.getType();
+            diary = gson.fromJson(serializedObject, type);
+        }
+        return diary;
+    }
+
+
     public void removeDiaryPref(int position){
         ArrayList<ItemData> diaries = getDiaryPref();
         diaries.remove(position);
@@ -53,6 +72,12 @@ public class PreUtil {
         String json = gson.toJson(diaries);
         editor.putString(DIARY_DATA, json);
         editor.commit();
+    }
+
+
+    public void removeTempPref() {
+        Gson gson = new Gson();
+        String json = gson.toJson(new ItemData());
     }
 
     private void resetDiaryPref(){

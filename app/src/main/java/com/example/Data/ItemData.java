@@ -8,6 +8,7 @@ public class ItemData {
     private String date="";
     private String when="";
     private String image="";
+    private String content="";
 
     public ItemData() {
     }
@@ -38,6 +39,13 @@ public class ItemData {
     }
     public void setWhen(String when) {
         this.when = when;
+    }
+
+    public String getContent() {
+        return content;
+    }
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getImage() {

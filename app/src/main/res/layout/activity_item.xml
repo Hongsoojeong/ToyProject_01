@@ -10,17 +10,11 @@
         android:text="New"
         android:fontFamily="@font/third_font"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:textColor="@color/black"
         android:layout_width="55dp"
         android:layout_height="match_parent"
         />
-    <Switch
-        android:id="@+id/record_checkSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" Record"
-        android:fontFamily="@font/third_font"/>
 
     <LinearLayout
         android:orientation="vertical"
