@@ -9,9 +9,6 @@ import android.widget.DatePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 
 public class PickerActivity extends AppCompatActivity {
 
@@ -35,21 +32,32 @@ public class PickerActivity extends AppCompatActivity {
         pickerBtn = findViewById(R.id.pickerBtn);
         datePicker = findViewById(R.id.datePicker);
 
+        datePicker.init(2021,1,1,DatePicker::updateDate);
+
         datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(),
                 (view, year, monthOfYear, dayOfMonth) -> {
                     yy=Integer.toString(year);
-                    mm=Integer.toString(monthOfYear-1);
+                    mm=Integer.toString(monthOfYear+1);
                     dd=Integer.toString(dayOfMonth);
                     check=true;
                 });
+
 
         pickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent();
-                intent.putExtra("memoTitle",yy+"년도"+mm+"월"+dd+"일");
-
+                if (yy == null) {
+                    if (mm == null) {
+                        if (dd == null) {
+                            intent.putExtra("memoTitle", 2021 + "년도" + 1 + "월" + 1 + "일");
+                        }
+                    }
+                }
+                else{
+                    intent.putExtra("memoTitle", yy + "년도" + mm + "월" + dd + "일");
+                }
                 setResult(RESULT_OK, intent);
                 finish();
 

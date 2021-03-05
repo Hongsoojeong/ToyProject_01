@@ -1,6 +1,6 @@
 package com.example.Adapter;
 
-import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.Activity.MemoActivity;
 import com.example.Activity.R;
 import com.example.Data.ItemData;
 
@@ -25,6 +24,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private ArrayList<ItemData> listData = new ArrayList<>();
     private ViewGroup parent;
 
+    public ItemAdapter(OnListItemSelectedInterface listener, OnListItemLongSelectedInterface longListener) {
+        this.mListener = listener;
+        this.mLongListener = longListener; }
+
     public interface OnListItemLongSelectedInterface {
         void onItemLongSelected(View v, int position);
     }
@@ -37,17 +40,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private OnListItemSelectedInterface mListener;
     private OnListItemLongSelectedInterface mLongListener;
 
-    public void Adapter(OnListItemSelectedInterface listener, OnListItemLongSelectedInterface longListener) {
-        this.mListener = listener;
-        this.mLongListener = longListener;
-    }
 
+
+
+    @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         this.parent = parent;
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_item, parent, false);
-
         return new ItemViewHolder(view);
     }
 
@@ -69,10 +69,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         listData.add(data);
     }
 
+
     public void resetItem(){
         listData.clear();
     }
-
 
 
     // RecyclerView 의 핵심인 ViewHolder.
@@ -82,6 +82,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         private TextView number;
         private TextView date;
         private TextView title;
+
+
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -94,13 +96,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent;
-                    intent=new Intent(itemView.getContext(), MemoActivity.class);
-                    itemView.getContext().startActivity(intent);
+                    Log.d("where",String.valueOf(getAdapterPosition()));
+                    mListener.onItemSelected(view, getAdapterPosition());
                 }
             });
 
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mLongListener.onItemLongSelected(view, getAdapterPosition());
+                    return false;
+                }
+            });
+//왜 size는 2밖에 안되는거지?
         }
+
 
 
         void onBind(int position, ItemData data, @NonNull ViewGroup parent) {

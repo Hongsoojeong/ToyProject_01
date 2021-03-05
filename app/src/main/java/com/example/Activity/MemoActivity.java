@@ -23,6 +23,7 @@ import com.example.Util.PreUtil;
 
 import java.io.InputStream;
 
+
 public class MemoActivity extends AppCompatActivity {
 
     public static boolean check = false;
@@ -83,13 +84,6 @@ public class MemoActivity extends AppCompatActivity {
         lunch_switch.setChecked(lcSwitch);
         dinner_switch.setChecked(dnSwitch);
 
-        String title = sharedPreferences.getString("memoTitle", "");
-
-        String content = sharedPreferences.getString("memoContent", "");
-
-
-        this.content.setText(content);
-        selectDate.setText(title);
 
 
         breakfast_switch.setOnCheckedChangeListener((view,b)->{
@@ -122,8 +116,8 @@ public class MemoActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Save is Completed", Toast.LENGTH_SHORT).show();
             String contentTrim = this.content.getText().toString().trim();
             String titleTrim= selectDate.getText().toString().trim();
-
             Log.d("save.setonClickListener", selectDate.getText().toString().trim());
+
             if (!titleTrim.equals("")&&!contentTrim.equals("")) {
                 memo(titleTrim, contentTrim);
                 finish();
@@ -131,6 +125,7 @@ public class MemoActivity extends AppCompatActivity {
             else{
                 Toast.makeText(getApplicationContext(), "Please Enter All value", Toast.LENGTH_SHORT).show();
             }
+
 
         });
 
@@ -143,14 +138,23 @@ public class MemoActivity extends AppCompatActivity {
             finish();
         });
 
+        getData();
 
     }
+
+
+    private void getData() {
+        Intent diaryIntent = getIntent();
+        selectDate.setText(diaryIntent.getStringExtra("date"));
+        content.setText(diaryIntent.getStringExtra("content"));
+
+    }
+
 
     public void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-
         startActivityForResult(intent, 101);
     }
 
@@ -187,18 +191,14 @@ public class MemoActivity extends AppCompatActivity {
 
     private void memo(String title, String content) {
         //날짜 저장
-        editor.putString("memoTitle", title).commit();
-        Log.d("LOGTAG/LISTACTIVITY", sharedPreferences.getString("memoTitle",""));
-        // 내용 저장
-        editor.putString("memoContent", content).commit();
-        Log.d("LOGTAG/LISTACTIVITY", sharedPreferences.getString("memoContent",""));
-
-
+        Intent intent = new Intent();
+        intent.putExtra("date", title);
+        intent.putExtra("content",content);
+        Log.d("content",intent.getStringExtra("content"));
         //스위치의 상태 저장
         editor.putBoolean("isBreakfastOn",breakfast_switch.isChecked()).commit();
         editor.putBoolean("isLunchOn",lunch_switch.isChecked()).commit();
         editor.putBoolean("isDinnerOn", dinner_switch.isChecked()).commit();
-
         if (breakfast_switch.isChecked()==true)
         {
             preUtil.setDiaryPref(new ItemData("Record",title, "breakfast","1"));
@@ -208,6 +208,7 @@ public class MemoActivity extends AppCompatActivity {
             preUtil.setDiaryPref(new ItemData("Record",title, "lunch","1"));
         }
         else if (dinner_switch.isChecked()==true){
+
             preUtil.setDiaryPref(new ItemData("Record",title, "dinner","1"));
         }
 
@@ -225,5 +226,6 @@ public class MemoActivity extends AppCompatActivity {
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
     }
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,11 @@ import java.util.ArrayList;
 
 //리사이클러 뷰 코드
 
-public class RecyclerViewActivity extends AppCompatActivity  {
+public class RecyclerViewActivity extends AppCompatActivity  implements ItemAdapter.OnListItemSelectedInterface, ItemAdapter.OnListItemLongSelectedInterface {
+
+    private enum Page{
+        DIARY
+    }
 
 
     private PreUtil prefUtil;
@@ -44,37 +49,33 @@ public class RecyclerViewActivity extends AppCompatActivity  {
 
 
         prefUtil = new PreUtil(this);
-        sharedPreferences = getSharedPreferences("sFile",MODE_PRIVATE);
-        editor = sharedPreferences.edit();
 
+        adapter = new ItemAdapter(this, this);
 
         recyclerView=findViewById(R.id.recyclerView);
-        addBtn =findViewById(R.id.add_itemView);
-
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new ItemAdapter();
+
         recyclerView.setAdapter(adapter);
+
+        sharedPreferences = getSharedPreferences("sFile",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        addBtn =findViewById(R.id.add_itemView);
+
+
+
 
 
         addBtn.setOnClickListener(view->{
-            Toast.makeText(this, "Create The New Diet Record!", Toast.LENGTH_SHORT).show();
             adapter.addItem(new ItemData(String.valueOf(count),"Date","When","1"));
-            count+=1;
             adapter.notifyDataSetChanged();
+            count+=1;
+            Toast.makeText(this, "Create The New Diet Record!", Toast.LENGTH_SHORT).show();
         });
+
+
     }
-
-    public void onItemLongSelected(View v, int position) {
-        prefUtil.removeDiaryPref(position);
-        Toast.makeText(getApplicationContext(), "Remove Diary", Toast.LENGTH_SHORT).show();
-        getData();
-    }
-
-
-
 
 
     private void getData(){
@@ -83,6 +84,47 @@ public class RecyclerViewActivity extends AppCompatActivity  {
         for(int i = 0; i < diaries.size(); i++) adapter.addItem(diaries.get(i));
         adapter.notifyDataSetChanged();
     }
+
+@Override
+    public void onItemLongSelected(View v, int position) {
+        if (position!=RecyclerView.NO_POSITION) {
+            prefUtil.removeDiaryPref(position);
+            adapter.notifyDataSetChanged();
+            Toast.makeText(getApplicationContext(), "Remove The Recorded Diet!", Toast.LENGTH_SHORT).show();
+            getData();
+        }
+    }
+
+
+@Override
+    public void onItemSelected(View v, int position) {
+    if(diaries.size()==position)
+    {
+        Intent intent;
+        intent = new Intent(getApplicationContext(), MemoActivity.class);
+        startActivity(intent);
+    }
+    else {
+        goToPage(Page.DIARY, diaries.get(position));
+    }
+
+    }
+
+    private void goToPage(Page page, ItemData diary){
+        Intent intent;
+        switch (page){
+            case DIARY:
+                intent = new Intent(getApplicationContext(), MemoActivity.class);
+                            intent.putExtra("date", diary.getDate());
+                            intent.putExtra("content", diary.getContent());
+
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + page);
+        }
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onResume() {
