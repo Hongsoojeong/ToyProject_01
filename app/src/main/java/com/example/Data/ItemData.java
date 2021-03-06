@@ -9,15 +9,18 @@ public class ItemData {
     private String when="";
     private String image="";
     private String content="";
+    private String aSwitch="";
 
     public ItemData() {
     }
 
-    public ItemData(String number, String date, String when, String image) {
+    public ItemData(String number, String date, String when, String content, String image,String aSwitch) {
         this.number=number;
         this.date = date;
         this.when = when;
         this.image=image;
+        this.content=content;
+        this.aSwitch=aSwitch;
     }
 
     public String getNumber() {

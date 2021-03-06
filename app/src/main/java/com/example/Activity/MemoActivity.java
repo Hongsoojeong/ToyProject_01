@@ -147,7 +147,18 @@ public class MemoActivity extends AppCompatActivity {
         Intent diaryIntent = getIntent();
         selectDate.setText(diaryIntent.getStringExtra("date"));
         content.setText(diaryIntent.getStringExtra("content"));
-
+        if (diaryIntent.getStringExtra("when")=="1")
+        {
+            this.breakfast_switch.setChecked(true);
+        }
+        else if (diaryIntent.getStringExtra("when")=="2")
+        {
+            this.lunch_switch.setChecked(true);
+        }
+        else if (diaryIntent.getStringExtra("when")=="3")
+        {
+            this.dinner_switch.setChecked(true);
+        }
     }
 
 
@@ -201,15 +212,18 @@ public class MemoActivity extends AppCompatActivity {
         editor.putBoolean("isDinnerOn", dinner_switch.isChecked()).commit();
         if (breakfast_switch.isChecked()==true)
         {
-            preUtil.setDiaryPref(new ItemData("Record",title, "breakfast","1"));
+
+            intent.putExtra("when","1");
+            preUtil.setDiaryPref(new ItemData("Record",title, "breakfast", content,"1","1"));
         }
         else if (lunch_switch.isChecked()==true)
         {
-            preUtil.setDiaryPref(new ItemData("Record",title, "lunch","1"));
+            intent.putExtra("when","2");
+            preUtil.setDiaryPref(new ItemData("Record",title, "lunch",content,"1","2"));
         }
         else if (dinner_switch.isChecked()==true){
-
-            preUtil.setDiaryPref(new ItemData("Record",title, "dinner","1"));
+            intent.putExtra("when","3");
+            preUtil.setDiaryPref(new ItemData("Record",title, "dinner",content,"1","3"));
         }
 
     }

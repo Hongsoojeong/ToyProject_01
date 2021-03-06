@@ -68,7 +68,7 @@ public class RecyclerViewActivity extends AppCompatActivity  implements ItemAdap
 
 
         addBtn.setOnClickListener(view->{
-            adapter.addItem(new ItemData(String.valueOf(count),"Date","When","1"));
+            adapter.addItem(new ItemData(String.valueOf(count),"Date","When","content","1","1"));
             adapter.notifyDataSetChanged();
             count+=1;
             Toast.makeText(this, "Create The New Diet Record!", Toast.LENGTH_SHORT).show();
@@ -117,6 +117,7 @@ public class RecyclerViewActivity extends AppCompatActivity  implements ItemAdap
                 intent = new Intent(getApplicationContext(), MemoActivity.class);
                             intent.putExtra("date", diary.getDate());
                             intent.putExtra("content", diary.getContent());
+                            intent.putExtra("when",diary.getWhen());
 
                 break;
             default:

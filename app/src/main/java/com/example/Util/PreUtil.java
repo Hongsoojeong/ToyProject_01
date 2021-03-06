@@ -15,7 +15,6 @@ public class PreUtil {
     Context context;
     private final SharedPreferences preferences;
     private final SharedPreferences.Editor editor;
-    private static final String DIARY_DATA = "diary_data";
 
     public PreUtil(Context context) {
         this.context = context;
