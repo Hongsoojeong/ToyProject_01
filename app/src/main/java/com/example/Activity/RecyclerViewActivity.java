@@ -117,8 +117,8 @@ public class RecyclerViewActivity extends AppCompatActivity  implements ItemAdap
                 intent = new Intent(getApplicationContext(), MemoActivity.class);
                             intent.putExtra("date", diary.getDate());
                             intent.putExtra("content", diary.getContent());
+                            intent.putExtra("image",diary.getImage());
                             intent.putExtra("when",diary.getWhen());
-
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + page);

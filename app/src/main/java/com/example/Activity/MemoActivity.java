@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.Data.ItemData;
 import com.example.Util.PreUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 
@@ -147,6 +149,7 @@ public class MemoActivity extends AppCompatActivity {
         Intent diaryIntent = getIntent();
         selectDate.setText(diaryIntent.getStringExtra("date"));
         content.setText(diaryIntent.getStringExtra("content"));
+        image.setImageBitmap(StringToBitmap(diaryIntent.getStringExtra("image")));
         if (diaryIntent.getStringExtra("when")=="1")
         {
             this.breakfast_switch.setChecked(true);
@@ -185,6 +188,8 @@ public class MemoActivity extends AppCompatActivity {
                     InputStream instream = resolver.openInputStream(fileUri);
                     Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
                     image.setImageBitmap(imgBitmap);
+                    String bitmap=BitMapToString(imgBitmap); // string으로 변환했어 그다음에 어떻게 저장하느나...!
+                    editor.putString("image",bitmap);
                     instream.close();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -199,7 +204,25 @@ public class MemoActivity extends AppCompatActivity {
 
     }
 
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
 
+    }
+
+    public static Bitmap StringToBitmap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
     private void memo(String title, String content) {
         //날짜 저장
         Intent intent = new Intent();
@@ -212,18 +235,37 @@ public class MemoActivity extends AppCompatActivity {
         editor.putBoolean("isDinnerOn", dinner_switch.isChecked()).commit();
         if (breakfast_switch.isChecked()==true)
         {
-
             intent.putExtra("when","1");
-            preUtil.setDiaryPref(new ItemData("Record",title, "breakfast", content,"1","1"));
+            if (sharedPreferences.getString("image","")!=""){
+                String image=sharedPreferences.getString("image","");
+                preUtil.setDiaryPref(new ItemData("Record",title, "breakfast", content,image,"1"));
+            }
+            else
+            {
+                preUtil.setDiaryPref(new ItemData("Record",title, "breakfast", content,"1","1"));
+            }
         }
         else if (lunch_switch.isChecked()==true)
         {
             intent.putExtra("when","2");
-            preUtil.setDiaryPref(new ItemData("Record",title, "lunch",content,"1","2"));
+            if (sharedPreferences.getString("image","")!=""){
+                String image=sharedPreferences.getString("image","");
+                preUtil.setDiaryPref(new ItemData("Record",title, "lunch", content,image,"2"));
+            }
+            else{
+                preUtil.setDiaryPref(new ItemData("Record",title, "lunch",content,"1","2"));
+            }
+
         }
         else if (dinner_switch.isChecked()==true){
             intent.putExtra("when","3");
-            preUtil.setDiaryPref(new ItemData("Record",title, "dinner",content,"1","3"));
+            if (sharedPreferences.getString("image","")!=""){
+                String image=sharedPreferences.getString("image","");
+                preUtil.setDiaryPref(new ItemData("Record",title, "dinner", content,image,"3"));
+            }
+            else {
+                preUtil.setDiaryPref(new ItemData("Record", title, "dinner", content, "1", "3"));
+            }
         }
 
     }
