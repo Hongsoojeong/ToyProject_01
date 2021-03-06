@@ -149,7 +149,9 @@ public class MemoActivity extends AppCompatActivity {
         Intent diaryIntent = getIntent();
         selectDate.setText(diaryIntent.getStringExtra("date"));
         content.setText(diaryIntent.getStringExtra("content"));
-        image.setImageBitmap(StringToBitmap(diaryIntent.getStringExtra("image")));
+        if (diaryIntent.getStringExtra("image")!="1") {
+            image.setImageBitmap(StringToBitmap(diaryIntent.getStringExtra("image")));
+        }
         if (diaryIntent.getStringExtra("when")=="1")
         {
             this.breakfast_switch.setChecked(true);
@@ -187,6 +189,7 @@ public class MemoActivity extends AppCompatActivity {
                 try {
                     InputStream instream = resolver.openInputStream(fileUri);
                     Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
+                    imgBitmap = imgBitmap.createScaledBitmap(imgBitmap,200,200,true);
                     image.setImageBitmap(imgBitmap);
                     String bitmap=BitMapToString(imgBitmap); // string으로 변환했어 그다음에 어떻게 저장하느나...!
                     editor.putString("image",bitmap);
@@ -217,6 +220,7 @@ public class MemoActivity extends AppCompatActivity {
         try {
             byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+
             return bitmap;
         } catch (Exception e) {
             e.getMessage();

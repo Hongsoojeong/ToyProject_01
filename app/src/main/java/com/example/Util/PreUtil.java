@@ -42,6 +42,7 @@ public class PreUtil {
         }
         return arrayItems;
     }
+//그래서 temp가 있는건가? 나중에 변경했을때 글러수있게..
 
     public void setTempPref(ItemData diary) {
         Gson gson = new Gson();

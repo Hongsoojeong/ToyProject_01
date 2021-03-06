@@ -79,6 +79,9 @@ public class RecyclerViewActivity extends AppCompatActivity  implements ItemAdap
 
 
     private void getData(){
+        //여기서 문제인데.. 아이템 뷰의 내용을 변경하면 해당 아이템 뷰에 변경이 되는게 아니라
+        // 아이템 뷰가 새로 생겨서 저장하게 된다.
+        //save할때 set에서 계속 add를 더하니까 생긴 일 아닌가?
         adapter.resetItem();
         diaries = prefUtil.getDiaryPref();
         for(int i = 0; i < diaries.size(); i++) adapter.addItem(diaries.get(i));
