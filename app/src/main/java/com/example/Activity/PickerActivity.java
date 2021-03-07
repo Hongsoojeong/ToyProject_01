@@ -51,12 +51,12 @@ public class PickerActivity extends AppCompatActivity {
                 if (yy == null) {
                     if (mm == null) {
                         if (dd == null) {
-                            intent.putExtra("memoTitle", 2021 + "년도" + 1 + "월" + 1 + "일");
+                            intent.putExtra("memoTitle", 2021 + " . " + 1 + " . " + 1);
                         }
                     }
                 }
                 else{
-                    intent.putExtra("memoTitle", yy + "년도" + mm + "월" + dd + "일");
+                    intent.putExtra("memoTitle", yy + " . " + mm + " . " + dd );
                 }
                 setResult(RESULT_OK, intent);
                 finish();
