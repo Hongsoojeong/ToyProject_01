@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,6 +48,10 @@ public class RecyclerViewActivity extends AppCompatActivity  implements ItemAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Guide").setMessage("1. Click the 'Add' button : Create the New diet memo \n2. !!Be careful!! : If you click the 'save' button, you can't make a change diet recording\n3. If you click the save button and change the any content, create new changed record in list\n4.If you want to delete the record, long click the list.");
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
 
         prefUtil = new PreUtil(this);
 
