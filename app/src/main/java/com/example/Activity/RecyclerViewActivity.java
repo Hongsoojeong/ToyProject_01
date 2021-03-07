@@ -68,7 +68,7 @@ public class RecyclerViewActivity extends AppCompatActivity  implements ItemAdap
 
 
         addBtn.setOnClickListener(view->{
-            adapter.addItem(new ItemData(String.valueOf(count),"Date","When","content","1","1"));
+            adapter.addItem(new ItemData(String.valueOf(count),"Date","When","content","1"));
             adapter.notifyDataSetChanged();
             count+=1;
             Toast.makeText(this, "Create The New Diet Record!", Toast.LENGTH_SHORT).show();
@@ -122,6 +122,7 @@ public class RecyclerViewActivity extends AppCompatActivity  implements ItemAdap
                             intent.putExtra("content", diary.getContent());
                             intent.putExtra("image",diary.getImage());
                             intent.putExtra("when",diary.getWhen());
+                            //여기까진 맞게 넣어지는 듯 그럼 getData에서 문제점이 발생하는건데
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + page);

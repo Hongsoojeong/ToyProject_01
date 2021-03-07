@@ -114,7 +114,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
 
         void onBind(int position, ItemData data, @NonNull ViewGroup parent) {
-            number.setText((position + 1) + " 장");
+            number.setText(String.valueOf(position + 1));
             date.setText(data.getDate());
             title.setText(data.getWhen());
             //imageView.setImageResource(data.getImage());

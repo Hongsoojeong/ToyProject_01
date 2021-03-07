@@ -14,13 +14,12 @@ public class ItemData {
     public ItemData() {
     }
 
-    public ItemData(String number, String date, String when, String content, String image,String aSwitch) {
+    public ItemData(String number, String date, String when, String content, String image) {
         this.number=number;
         this.date = date;
         this.when = when;
         this.image=image;
         this.content=content;
-        this.aSwitch=aSwitch;
     }
 
     public String getNumber() {

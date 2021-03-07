@@ -77,15 +77,6 @@ public class MemoActivity extends AppCompatActivity {
 
 
 
-        boolean bfSwitch = sharedPreferences.getBoolean("isBreakfastOn",false);
-        boolean lcSwitch = sharedPreferences.getBoolean("isLunchOn",false);
-        boolean dnSwitch = sharedPreferences.getBoolean("isDinnerOn",false);
-
-
-        breakfast_switch.setChecked(bfSwitch);
-        lunch_switch.setChecked(lcSwitch);
-        dinner_switch.setChecked(dnSwitch);
-
 
 
         breakfast_switch.setOnCheckedChangeListener((view,b)->{
@@ -152,18 +143,17 @@ public class MemoActivity extends AppCompatActivity {
         if (diaryIntent.getStringExtra("image")!="1") {
             image.setImageBitmap(StringToBitmap(diaryIntent.getStringExtra("image")));
         }
-        if (diaryIntent.getStringExtra("when")=="1")
-        {
-            this.breakfast_switch.setChecked(true);
+
+        if (diaryIntent.getStringExtra("when")!=null) {
+            if (diaryIntent.getStringExtra("when").equals("breakfast")) {
+                breakfast_switch.setChecked(true);
+            } else if (diaryIntent.getStringExtra("when").equals("lunch"))
+                lunch_switch.setChecked(true);
+            else if (diaryIntent.getStringExtra("when").equals("dinner"))
+                dinner_switch.setChecked(true);
         }
-        else if (diaryIntent.getStringExtra("when")=="2")
-        {
-            this.lunch_switch.setChecked(true);
-        }
-        else if (diaryIntent.getStringExtra("when")=="3")
-        {
-            this.dinner_switch.setChecked(true);
-        }
+
+
     }
 
 
@@ -242,11 +232,11 @@ public class MemoActivity extends AppCompatActivity {
             intent.putExtra("when","1");
             if (sharedPreferences.getString("image","")!=""){
                 String image=sharedPreferences.getString("image","");
-                preUtil.setDiaryPref(new ItemData("Record",title, "breakfast", content,image,"1"));
+                preUtil.setDiaryPref(new ItemData("Record",title, "breakfast", content,image));
             }
             else
             {
-                preUtil.setDiaryPref(new ItemData("Record",title, "breakfast", content,"1","1"));
+                preUtil.setDiaryPref(new ItemData("Record",title, "breakfast", content,"1"));
             }
         }
         else if (lunch_switch.isChecked()==true)
@@ -254,10 +244,10 @@ public class MemoActivity extends AppCompatActivity {
             intent.putExtra("when","2");
             if (sharedPreferences.getString("image","")!=""){
                 String image=sharedPreferences.getString("image","");
-                preUtil.setDiaryPref(new ItemData("Record",title, "lunch", content,image,"2"));
+                preUtil.setDiaryPref(new ItemData("Record",title, "lunch", content,image));
             }
             else{
-                preUtil.setDiaryPref(new ItemData("Record",title, "lunch",content,"1","2"));
+                preUtil.setDiaryPref(new ItemData("Record",title, "lunch",content,"1"));
             }
 
         }
@@ -265,10 +255,10 @@ public class MemoActivity extends AppCompatActivity {
             intent.putExtra("when","3");
             if (sharedPreferences.getString("image","")!=""){
                 String image=sharedPreferences.getString("image","");
-                preUtil.setDiaryPref(new ItemData("Record",title, "dinner", content,image,"3"));
+                preUtil.setDiaryPref(new ItemData("Record",title, "dinner", content,image));
             }
             else {
-                preUtil.setDiaryPref(new ItemData("Record", title, "dinner", content, "1", "3"));
+                preUtil.setDiaryPref(new ItemData("Record", title, "dinner", content, "1"));
             }
         }
 
